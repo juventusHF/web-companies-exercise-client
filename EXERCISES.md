@@ -67,9 +67,6 @@ Right now the app always shows "No companies yet", because `companies` is just a
    - on success, store the list in `companies`
    - on failure, set `error` to `Could not load companies: <message>`
    - in both cases, set `loading` to `false` at the end
-3. **Bonus:** return a cleanup function from the effect that sets a `cancelled` flag, and only
-   update the state if the effect was not cancelled. (Why could this matter? Hint: React's
-   `StrictMode` runs effects twice in development.)
 
 ✅ **Check:** You see "Loading…" briefly, then the list of company names from the server. If
 you stop the backend and reload, you see an error message.

@@ -21,7 +21,6 @@ function App() {
   //  - call getCompanies() and store the result in `companies`
   //  - if it fails, set `error` to "Could not load companies: <message>"
   //  - when done (success or failure), set `loading` to false
-  //  - bonus: return a cleanup function so you don't set state after the component unmounted
 
   const handleCreate = async (input: CompanyInput) => {
     // TODO (Exercise 9): create the company on the server, append the returned company
