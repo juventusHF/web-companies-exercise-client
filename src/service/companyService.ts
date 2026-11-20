@@ -17,17 +17,17 @@ async function request<T>(url: string, init?: RequestInit): Promise<T> {
 
 export const getCompanies = () => request<Company[]>(BASE_URL)
 
-export const createCompany = (company: CompanyInput) =>
-  request<Company>(BASE_URL, {
-    method: 'POST',
-    body: JSON.stringify(company),
-  })
+// TODO (Exercise 8): send a POST request to BASE_URL with the company as JSON body.
+//  Hint: look at how `getCompanies` uses `request`, and pass `{ method, body }` as second argument.
+//  Use JSON.stringify to turn the object into a string.
+export const createCompany = (company: CompanyInput): Promise<Company> =>
+  Promise.reject(new Error(`createCompany not implemented yet (${company.name})`))
 
-export const updateCompany = (id: string, company: CompanyInput) =>
-  request<Company>(`${BASE_URL}/${encodeURIComponent(id)}`, {
-    method: 'PUT',
-    body: JSON.stringify(company),
-  })
+// TODO (Exercise 8): send a PUT request to `${BASE_URL}/<id>` with the company as JSON body.
+//  Use encodeURIComponent(id) when putting the id into the URL.
+export const updateCompany = (id: string, company: CompanyInput): Promise<Company> =>
+  Promise.reject(new Error(`updateCompany not implemented yet (${id}, ${company.name})`))
 
-export const deleteCompany = (id: string) =>
-  request<void>(`${BASE_URL}/${encodeURIComponent(id)}`, { method: 'DELETE' })
+// TODO (Exercise 8): send a DELETE request to `${BASE_URL}/<id>` (no body needed).
+export const deleteCompany = (id: string): Promise<void> =>
+  Promise.reject(new Error(`deleteCompany not implemented yet (${id})`))

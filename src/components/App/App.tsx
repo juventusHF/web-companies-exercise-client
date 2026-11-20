@@ -1,54 +1,45 @@
-import { useEffect, useState } from 'react'
-import { createCompany, deleteCompany, getCompanies, updateCompany } from '../../service/companyService'
+import { useState } from 'react'
+import type { Company, CompanyInput } from '../../model/Company'
 import CompanyForm from '../CompanyForm/CompanyForm'
 import CompanyList from '../CompanyList/CompanyList'
-import type { Company, CompanyInput } from '../../model/Company'
 import common from '../../styles/common.module.css'
 import styles from './App.module.css'
+// TODO (Exercise 1): import `useEffect` from 'react' and `getCompanies` from the company service
+// TODO (Exercise 9): import `createCompany`, `updateCompany` and `deleteCompany` from the company service
 
 type Mode = { kind: 'list' } | { kind: 'create' } | { kind: 'edit'; company: Company }
 
 function App() {
-  const [companies, setCompanies] = useState<Company[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  // TODO (Exercise 1): turn `companies`, `loading` and `error` into state variables with useState
+  const companies: Company[] = []
+  const loading = false
+  const error: string | null = null
   const [mode, setMode] = useState<Mode>({ kind: 'list' })
 
-  useEffect(() => {
-    let cancelled = false
-    getCompanies()
-      .then((list) => !cancelled && setCompanies(list))
-      .catch(
-        (err) =>
-          !cancelled &&
-          setError(`Could not load companies: ${err instanceof Error ? err.message : err}`),
-      )
-      .finally(() => !cancelled && setLoading(false))
-    return () => {
-      cancelled = true
-    }
-  }, [])
+  // TODO (Exercise 1): load the companies from the server when the component is first rendered
+  //  - use useEffect with an empty dependency array
+  //  - call getCompanies() and store the result in `companies`
+  //  - if it fails, set `error` to "Could not load companies: <message>"
+  //  - when done (success or failure), set `loading` to false
+  //  - bonus: return a cleanup function so you don't set state after the component unmounted
 
   const handleCreate = async (input: CompanyInput) => {
-    const created = await createCompany(input)
-    setCompanies((list) => [...list, created])
-    setMode({ kind: 'list' })
+    // TODO (Exercise 9): create the company on the server, append the returned company
+    //  to `companies` and go back to the list view
+    console.log('TODO: create', input)
   }
 
   const handleUpdate = async (id: string, input: CompanyInput) => {
-    const updated = await updateCompany(id, input)
-    setCompanies((list) => list.map((c) => (c.id === id ? updated : c)))
-    setMode({ kind: 'list' })
+    // TODO (Exercise 9): update the company on the server, replace the matching company
+    //  in `companies` with the returned one and go back to the list view
+    console.log('TODO: update', id, input)
   }
 
   const handleDelete = async (company: Company) => {
-    if (!confirm(`Delete "${company.name}"?`)) return
-    try {
-      await deleteCompany(company.id)
-      setCompanies((list) => list.filter((c) => c.id !== company.id))
-    } catch (err) {
-      setError(`Could not delete company: ${err instanceof Error ? err.message : err}`)
-    }
+    // TODO (Exercise 9): ask the user for confirmation with confirm(`Delete "<name>"?`),
+    //  delete the company on the server and remove it from `companies`.
+    //  If deleting fails, set `error` to "Could not delete company: <message>"
+    console.log('TODO: delete', company)
   }
 
   if (mode.kind === 'create') {

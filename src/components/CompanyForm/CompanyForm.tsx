@@ -25,38 +25,31 @@ const emptyCompany: CompanyInput = {
 function CompanyForm({ initial = emptyCompany, submitLabel, onSubmit, onCancel }: Props) {
   const [name, setName] = useState(initial.name)
   const [address, setAddress] = useState(initial.address)
-  const [employees, setEmployees] = useState<EmployeeDraft[]>(
+  // TODO (Exercise 6): add the remaining setter (`setEmployees`) so the list can be changed
+  const [employees] = useState<EmployeeDraft[]>(
     initial.employees.map((e) => ({ name: e.name, salary: String(e.salary) })),
   )
-  const [error, setError] = useState<string | null>(null)
-  const [saving, setSaving] = useState(false)
+  // TODO (Exercise 7): add the remaining setters (`setError`, `setSaving`)
+  const [error] = useState<string | null>(null)
+  const [saving] = useState(false)
 
   const updateAddress = (field: keyof CompanyInput['address'], value: string) =>
     setAddress((a) => ({ ...a, [field]: value }))
 
-  const updateEmployee = (index: number, field: keyof EmployeeDraft, value: string) =>
-    setEmployees((list) => list.map((e, i) => (i === index ? { ...e, [field]: value } : e)))
+  // TODO (Exercise 6): write a function `updateEmployee(index, field, value)` that returns a new
+  //  employees array where only the employee at `index` has `field` set to `value`.
+  //  Hint: use `.map((e, i) => ...)` and the spread operator, like `updateAddress` above.
 
   const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault()
-    setError(null)
-    setSaving(true)
-    try {
-      await onSubmit({
-        name: name.trim(),
-        address: {
-          street: address.street.trim(),
-          number: address.number.trim(),
-          city: address.city.trim(),
-          country: address.country.trim(),
-        },
-        employees: employees.map((e) => ({ name: e.name.trim(), salary: Number(e.salary) })),
-      })
-    } catch (err) {
-      setError(err instanceof Error ? err.message : String(err))
-    } finally {
-      setSaving(false)
-    }
+    // TODO (Exercise 7):
+    //  - prevent the default browser form submission (it would reload the page!)
+    //  - reset `error` and set `saving` to true
+    //  - call `onSubmit` with a CompanyInput built from the state:
+    //      * trim all strings
+    //      * convert each employee's salary back to a number
+    //  - if `onSubmit` throws, show the error message in `error`
+    //  - finally set `saving` back to false
+    console.log('TODO: submit', event, onSubmit, name, address, employees)
   }
 
   return (
@@ -77,71 +70,28 @@ function CompanyForm({ initial = emptyCompany, submitLabel, onSubmit, onCancel }
               required
             />
           </label>
-          <label className={styles.small}>
-            Number
-            <input
-              value={address.number}
-              onChange={(e) => updateAddress('number', e.target.value)}
-              required
-            />
-          </label>
+          {/* TODO (Exercise 5): add a controlled "Number" input (use className={styles.small}
+              on the label) following the "Street" example above */}
         </div>
         <div className={styles.row}>
-          <label className={styles.grow}>
-            City
-            <input
-              value={address.city}
-              onChange={(e) => updateAddress('city', e.target.value)}
-              required
-            />
-          </label>
-          <label className={styles.grow}>
-            Country
-            <input
-              value={address.country}
-              onChange={(e) => updateAddress('country', e.target.value)}
-              required
-            />
-          </label>
+          {/* TODO (Exercise 5): add controlled "City" and "Country" inputs
+              (use className={styles.grow} on the labels) */}
         </div>
       </fieldset>
 
       <fieldset>
         <legend>Employees</legend>
         {employees.length === 0 && <p className={common.muted}>No employees yet.</p>}
-        {employees.map((employee, index) => (
-          <div className={styles.row} key={index}>
-            <label className={styles.grow}>
-              Name
-              <input
-                value={employee.name}
-                onChange={(e) => updateEmployee(index, 'name', e.target.value)}
-                required
-              />
-            </label>
-            <label className={styles.small}>
-              Salary
-              <input
-                type="number"
-                min="0"
-                step="any"
-                value={employee.salary}
-                onChange={(e) => updateEmployee(index, 'salary', e.target.value)}
-                required
-              />
-            </label>
-            <button
-              type="button"
-              className={common.danger}
-              onClick={() => setEmployees((list) => list.filter((_, i) => i !== index))}
-            >
-              Remove
-            </button>
-          </div>
-        ))}
+        {/* TODO (Exercise 6): render one row (<div className={styles.row}>) per employee with:
+             - a controlled "Name" input (label className={styles.grow})
+             - a controlled "Salary" input of type="number", min="0", step="any"
+               (label className={styles.small})
+             - a "Remove" button (type="button", className={common.danger}) that removes
+               this employee from the list (hint: `.filter((_, i) => i !== index)`) */}
         <button
           type="button"
-          onClick={() => setEmployees((list) => [...list, { name: '', salary: '' }])}
+          // TODO (Exercise 6): append a new empty employee { name: '', salary: '' } to the list
+          onClick={() => {}}
         >
           + Add employee
         </button>
