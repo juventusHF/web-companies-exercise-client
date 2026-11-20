@@ -1,4 +1,4 @@
-# web-todo-exercise-react-demo
+# web-companies-exercise-react-demo
 
 Simple react frontend generated with vite.  
 Talks to https://github.com/juventusHF/web-companies-exercise-server
