@@ -1,0 +1,21 @@
+.employees {
+  margin-top: 12px;
+  border-collapse: collapse;
+  min-width: 320px;
+}
+
+.employees th,
+.employees td {
+  padding: 4px 12px 4px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.employees th {
+  text-align: left;
+  color: var(--text-h);
+  font-weight: 500;
+}
+
+.employees .salary {
+  text-align: right;
+}
